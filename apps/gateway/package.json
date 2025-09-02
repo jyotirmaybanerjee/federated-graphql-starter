@@ -1,0 +1,10 @@
+{
+  "name": "gateway",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "compose": "rover supergraph compose --config supergraph.yaml --elv2-license=accept > supergraph.graphql",
+    "dev": "pnpm run compose && router --supergraph ./supergraph.graphql"
+  },
+  "devDependencies": {}
+}

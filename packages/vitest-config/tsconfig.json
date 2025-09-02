@@ -1,0 +1,5 @@
+{
+    "extends": "../typescript-config/tsconfig.json",
+    "include": ["vitest.config.ts"]
+  }
+  
