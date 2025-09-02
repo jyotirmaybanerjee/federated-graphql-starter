@@ -1,21 +1,20 @@
 {
   "name": "federated-graphql-starter",
-  "version": "1.0.0",
-  "main": "index.js",
   "private": true,
-  "packageManager": "pnpm@8.15.9",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start:all": "concurrently \"pnpm --filter users start\" \"pnpm --filter products start\"",
-    "start:gateway": "pnpm --filter gateway start",
-    "start:users": "pnpm --filter users start",
-    "start:products": "pnpm --filter products start"
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "check-types": "turbo run check-types"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "concurrently": "^9.2.1"
+  "devDependencies": {
+    "prettier": "^3.6.2",
+    "turbo": "^2.5.6",
+    "typescript": "5.9.2"
+  },
+  "packageManager": "pnpm@9.0.0",
+  "engines": {
+    "node": ">=18"
   }
 }
