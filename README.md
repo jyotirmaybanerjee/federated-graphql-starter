@@ -2,122 +2,181 @@
 
 [![codecov](https://codecov.io/gh/yourusername/yourrepo/branch/main/graph/badge.svg?token=YOUR_TOKEN)](https://codecov.io/gh/yourusername/yourrepo) [![GitHub Actions Workflow Status][check-workflow-badge]][check-workflow-badge-link] [![GitHub License][github-license-badge]][github-license-badge-link] [![GitHub contributors][github-contributors-badge]][github-contributors-badge-link] [![jyotirmaybanerjee][made-by-jyotirmaybanerjee-badge]][made-by-jyotirmaybanerjee-badge-link]
 
-## Purpose:
- - Build a federated GraphQL architecture using Apollo Federation.
- - Enable independent CI/CD pipelines for each subgraph (e.g., users, products, orders).
- - Automatically update the supergraph schema upon subgraph deployments.
+This is a boilerplate monorepo for building a federated GraphQL architecture with Apollo Federation using TurboRepo. It includes:
 
-🧩 Architecture Overview
-🧱 Components
-| Component                           | Description                                                                           |
-| ----------------------------------- | ------------------------------------------------------------------------------------- |
-| **Subgraphs**                       | Individual services with their own GraphQL schemas (e.g., `users`, `products`).       |
-| **Gateway**                         | Apollo Router or Apollo Gateway that composes all subgraphs into a single supergraph. |
-| **Apollo Studio / Schema Registry** | For schema management and composition.                                                |
-| **CI/CD Pipelines**                 | For each subgraph and optionally for the gateway.                                     |
+- Multiple subgraph services (`users`, `products`)
+- Apollo Router as the gateway
+- Shared packages for ESLint, TypeScript config, and Vitest config
+- CI/CD workflows for testing, linting, type-checking, and schema publishing
+- Docker & Docker Compose setup for easy local development and deployment
 
+---
 
-```bash
-mkdir federated-graphql-starter
-cd federated-graphql-starter
-pnpm init
+## Table of Contents
 
-mkdir gateway users products scripts
-```
+- [Architecture](#architecture)
+- [Getting Started](#getting-started)
+- [Development](#development)
+- [Testing](#testing)
+- [Linting](#linting)
+- [Type Checking](#type-checking)
+- [Building](#building)
+- [Schema Composition](#schema-composition)
+- [Running the Gateway](#running-the-gateway)
+- [Docker](#docker)
+- [CI/CD](#cicd)
+- [Folder Structure](#folder-structure)
+- [Contributing](#contributing)
+- [License](#license)
 
-Add a pnpm-workspace.yaml:
+---
 
-```yaml
-packages:
-  - "gateway"
-  - "subgraphs/*"
+## Architecture
 
-```
+- **Subgraphs:** Independent GraphQL services with their own schemas (Users, Products).
+- **Gateway:** Apollo Router composes subgraph schemas into a supergraph and routes requests.
+- **Monorepo:** Managed by [TurboRepo](https://turbo.build/), enabling fast builds and caching.
+- **Shared Packages:** ESLint, TypeScript, and Vitest configurations shared across all apps.
 
-```bash
-# Terminal 1
-curl -sSL https://router.apollo.dev/download/nix/latest | sh
-sudo mv ./router /usr/local/bin/
-router --version
-npm install -g @apollo/rover
-```
+---
 
-```bash
-# Terminal 2
-cd users
-npm init -y
-npm install @apollo/server graphql @apollo/subgraph express cors body-parser graphql-tag
-npm install --save-dev typescript ts-node nodemon @types/node @types/express
-npx tsc --init
-npm install
-npm run dev
-```
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v18+ recommended)
+- [pnpm](https://pnpm.io/) package manager
+- Docker (optional, for containerized development)
+- Apollo CLI tools (`rover`, `router`) installed globally
 
 ```bash
-# Terminal 3
-cd products
-npm init -y
-npm install @apollo/server graphql @apollo/subgraph express cors body-parser graphql-tag
-npm install --save-dev typescript ts-node nodemon @types/node @types/express
-npx tsc --init
-npm install
-npm run dev 
+# Install pnpm globally if you haven't
+npm install -g pnpm
+pnpm install
 ```
 
-```bash
-# Terminal 1
-rover subgraph introspect http://localhost:4001/graphql > users/schema.graphql
-rover subgraph introspect http://localhost:4002/graphql > products/schema.graphql
+## Development
 
-cd gateway
-rover supergraph compose --config supergraph.yaml > supergraph.graphql
-# Or
-rover supergraph compose --config supergraph.yaml --elv2-license=accept > supergraph.graphql
-cd ..
+Run all apps concurrently (subgraphs + gateway):
+
+```
+pnpm run start:all
 ```
 
-
-## 🔄 CI/CD Pipeline for Subgraphs
-
-### Each subgraph has its own CI/CD pipeline, which:
-
- - Runs tests & linting.
- - Builds and deploys the service.
- - Publishes its schema to Apollo Studio.
-
- ## 📡 Apollo Studio + Schema Registry
-
-#### Use Apollo Studio
- - for managing subgraph schemas and composing the supergraph.
-
-You use `rover subgraph publish` in CI to publish updates. Apollo Studio then handles:
-
- - Schema validation
- - Supergraph composition
- - Updating the router via Apollo Uplink (if enabled)
-
-```bash
-rover subgraph publish
+Run an individual app (e.g., products):
+```
+pnpm --filter=products dev
 ```
 
-## CI/CD for Router (Supergraph Update)
+## Testing
 
-You may want a job that regularly fetches the latest supergraph (if not using Apollo Uplink):
+Run tests across all apps/packages:
 
-```bash
-rover supergraph fetch my-graph@current > supergraph.graphql
+```
+pnpm run test
 ```
 
-Use this schema in the router's config to hot-reload.
+## Linting
 
-## 🧪 Local Development Setup
+Run ESLint on all codebases:
 
-You can use Apollo Workbench
- or rover dev for local composition/testing.
-
-```bash
-rover dev --supergraph-config ./supergraph.yaml
 ```
+pnpm run lint
+```
+
+## Type Checking
+
+Run TypeScript type checking:
+
+```
+pnpm run typecheck
+```
+
+## Building
+
+Build all apps/packages:
+
+```
+pnpm run build
+```
+
+## Schema Composition
+
+Before running the Apollo Router gateway, you must compose the supergraph schema:
+
+```
+rover supergraph compose --config apps/gateway/supergraph.yaml > apps/gateway/supergraph.graphql
+```
+
+## Running the Gateway
+
+Start the Apollo Router gateway with the composed schema:
+
+```
+cd apps/gateway
+router --supergraph supergraph.graphql
+```
+
+## Docker
+#### Build and start containers
+
+```
+docker-compose up --build
+```
+
+#### Stop containers
+
+```
+docker-compose down
+```
+
+## CI/CD
+
+The project includes GitHub Actions workflows to:
+
+ - Run lint, test, and typecheck stages on every push
+ - Publish the composed schema to Apollo Studio
+ - Build and push Docker images
+
+Make sure to configure the following secrets in your GitHub repository:
+
+ - APOLLO_KEY — Apollo Studio API key
+ - DOCKER_USERNAME and DOCKER_PASSWORD — for Docker Hub pushes (optional)
+
+
+## Folder Structure
+
+```
+.
+├── apps
+│   ├── gateway         # Apollo Router gateway service
+│   ├── products        # Products subgraph service
+│   └── users           # Users subgraph service
+├── packages            # Shared configs and utilities
+│   ├── eslint-config
+│   ├── typescript-config
+│   ├── vitest-config
+│   └── shared          # Shared code (e.g. logger)
+├── .github             # GitHub Actions workflows
+├── docker-compose.yml
+├── pnpm-workspace.yaml
+├── turbo.json          # TurboRepo configuration
+└── README.md
+```
+
+## Contributing
+
+Contributions are welcome! Please open issues or pull requests to help improve the project.
+
+## License
+
+MIT License © Jyotirmay Banerjee
+
+
+------------------------------------------------
+
+If you have any questions or need help, feel free to reach out!
+
 
 
 [check-workflow-badge]: https://img.shields.io/github/actions/workflow/status/jyotirmaybanerjee/ai-suite/check.yml?label=check
