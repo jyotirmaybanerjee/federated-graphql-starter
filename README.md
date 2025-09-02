@@ -118,3 +118,14 @@ You can use Apollo Workbench
 ```bash
 rover dev --supergraph-config ./supergraph.yaml
 ```
+
+
+[check-workflow-badge]: https://img.shields.io/github/actions/workflow/status/jyotirmaybanerjee/ai-suite/check.yml?label=check
+[github-license-badge]: https://img.shields.io/github/license/jyotirmaybanerjee/ai-suite?link=https%3A%2F%2Fgithub.com%2Fjyotirmaybanerjee%2Fai-suite%2Fblob%2Fmain%2FLICENSE
+[github-contributors-badge]: https://img.shields.io/github/contributors/jyotirmaybanerjee/ai-suite?link=https%3A%2F%2Fgithub.com%2Fjyotirmaybanerjee%2Fai-suite%2Fgraphs%2Fcontributors
+[made-by-jyotirmaybanerjee-badge]: https://img.shields.io/badge/made_by-jyotirmaybanerjee-blue?color=FF782B&link=https://jyotirmaybanerjee.com/
+
+[check-workflow-badge-link]: https://github.com/jyotirmaybanerjee/federated-graphql-starter/actions/workflows/check.yml
+[github-license-badge-link]: https://github.com/jyotirmaybanerjee/federated-graphql-starter/blob/main/LICENSE
+[github-contributors-badge-link]: https://github.com/jyotirmaybanerjee/federated-graphql-starter/graphs/contributors
+[made-by-jyotirmaybanerjee-badge-link]: https://jyotirmaybanerjee.com/?utm_source=nextenterprise&utm_medium=github
