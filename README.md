@@ -1,8 +1,6 @@
 # federated graph with CI/CD for individual graphs
 
-[![codecov](https://codecov.io/gh/yourusername/yourrepo/branch/main/graph/badge.svg?token=YOUR_TOKEN)](https://codecov.io/gh/yourusername/yourrepo)
-
-[![GitHub Actions Workflow Status][check-workflow-badge]][check-workflow-badge-link] [![GitHub License][github-license-badge]][github-license-badge-link] [![GitHub contributors][github-contributors-badge]][github-contributors-badge-link] [![jyotirmaybanerjee][made-by-jyotirmaybanerjee-badge]][made-by-jyotirmaybanerjee-badge-link]
+[![codecov](https://codecov.io/gh/yourusername/yourrepo/branch/main/graph/badge.svg?token=YOUR_TOKEN)](https://codecov.io/gh/yourusername/yourrepo)[![GitHub Actions Workflow Status][check-workflow-badge]][check-workflow-badge-link] [![GitHub License][github-license-badge]][github-license-badge-link] [![GitHub contributors][github-contributors-badge]][github-contributors-badge-link] [![jyotirmaybanerjee][made-by-jyotirmaybanerjee-badge]][made-by-jyotirmaybanerjee-badge-link]
 
 ## Purpose:
  - Build a federated GraphQL architecture using Apollo Federation.
