@@ -1,6 +1,6 @@
 # federated graph with CI/CD for individual graphs
 
-[![codecov](https://codecov.io/gh/yourusername/yourrepo/branch/main/graph/badge.svg?token=YOUR_TOKEN)](https://codecov.io/gh/yourusername/yourrepo) [![GitHub Actions Workflow Status][check-workflow-badge]][check-workflow-badge-link] [![GitHub License][github-license-badge]][github-license-badge-link] [![GitHub contributors][github-contributors-badge]][github-contributors-badge-link] [![jyotirmaybanerjee][made-by-jyotirmaybanerjee-badge]][made-by-jyotirmaybanerjee-badge-link]
+[![codecov](https://codecov.io/gh/jyotirmaybanerjee/federated-graphql-starter/branch/main/graph/badge.svg?token=a9c9ae63-f3c3-4fe8-ac8d-bc383cc5d036)](https://codecov.io/gh/yourusername/yourrepo) [![GitHub Actions Workflow Status][check-workflow-badge]][check-workflow-badge-link] [![GitHub License][github-license-badge]][github-license-badge-link] [![GitHub contributors][github-contributors-badge]][github-contributors-badge-link] [![jyotirmaybanerjee][made-by-jyotirmaybanerjee-badge]][made-by-jyotirmaybanerjee-badge-link]
 
 This is a boilerplate monorepo for building a federated GraphQL architecture with Apollo Federation using TurboRepo. It includes:
 
